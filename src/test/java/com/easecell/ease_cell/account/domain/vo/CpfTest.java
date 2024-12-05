@@ -1,6 +1,5 @@
 package com.easecell.ease_cell.account.domain.vo;
 
-import com.easecell.ease_cell.domain.vo.CPF;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

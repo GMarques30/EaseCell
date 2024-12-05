@@ -2,10 +2,12 @@ package com.easecell.ease_cell.account.infra.repository;
 
 import com.easecell.ease_cell.account.application.repository.AccountRepository;
 import com.easecell.ease_cell.account.domain.entity.Account;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
+@Repository
 public class AccountRepositoryMemory implements AccountRepository {
   private final ArrayList<Account> accounts;
 
@@ -25,6 +27,7 @@ public class AccountRepositoryMemory implements AccountRepository {
 
   @Override
   public Optional<Account> findByAccountId(String accountId) {
+
     return this.accounts.stream().filter(account -> account.accountId.equals(accountId)).findFirst();
   }
 }

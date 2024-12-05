@@ -1,6 +1,6 @@
-package com.easecell.ease_cell.domain.entity;
+package com.easecell.ease_cell.account.domain.entity;
 
-import com.easecell.ease_cell.domain.vo.*;
+import com.easecell.ease_cell.account.domain.vo.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

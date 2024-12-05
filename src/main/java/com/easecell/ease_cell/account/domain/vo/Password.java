@@ -1,4 +1,4 @@
-package com.easecell.ease_cell.domain.vo;
+package com.easecell.ease_cell.account.domain.vo;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

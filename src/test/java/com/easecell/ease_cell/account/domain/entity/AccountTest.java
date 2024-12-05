@@ -1,6 +1,5 @@
 package com.easecell.ease_cell.account.domain.entity;
 
-import com.easecell.ease_cell.domain.entity.Account;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,9 +22,9 @@ public class AccountTest {
     assertThat(account.getName()).isEqualTo("John Doe");
     assertThat(account.getFirstName()).isEqualTo("John");
     assertThat(account.getLastName()).isEqualTo("Doe");
-    assertThat(account.getCpf()).isEqualTo("123.456.789-09");
+    assertThat(account.getCpf()).isEqualTo("12345678909");
     assertThat(account.getBirthDate()).isEqualTo("03-07-1998");
-    assertThat(account.getPhone()).isEqualTo("(11) 91234-5678");
+    assertThat(account.getPhone()).isEqualTo("11912345678");
     assertThat(account.getEmail()).isEqualTo("john.doe@example.com");
     assertThat(account.getAccountAvatar()).isEqualTo("https://ui-avatars.com/api/?name=John+Doe&background=random");
   }
@@ -43,7 +42,7 @@ public class AccountTest {
   @DisplayName("Should be able to change the cpf")
   public void should_be_able_to_change_the_cpf() {
     account.setCpf("529.982.247-25");
-    assertThat(account.getCpf()).isEqualTo("529.982.247-25");
+    assertThat(account.getCpf()).isEqualTo("52998224725");
   }
 
   @Test
@@ -57,7 +56,7 @@ public class AccountTest {
   @DisplayName("Should be able to change a phone")
   public void should_be_able_to_change_a_phone() {
     account.setPhone("(51) 99321-0987");
-    assertThat(account.getPhone()).isEqualTo("(51) 99321-0987");
+    assertThat(account.getPhone()).isEqualTo("51993210987");
   }
 
   @Test

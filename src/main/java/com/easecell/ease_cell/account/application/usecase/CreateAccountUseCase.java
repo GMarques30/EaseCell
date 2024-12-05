@@ -2,8 +2,10 @@ package com.easecell.ease_cell.account.application.usecase;
 
 import com.easecell.ease_cell.account.application.dto.CreateAccountInput;
 import com.easecell.ease_cell.account.application.repository.AccountRepository;
-import com.easecell.ease_cell.domain.entity.Account;
+import com.easecell.ease_cell.account.domain.entity.Account;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CreateAccountUseCase {
   private final AccountRepository accountRepository;
 

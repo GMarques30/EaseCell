@@ -1,4 +1,4 @@
-package com.easecell.ease_cell.domain.vo;
+package com.easecell.ease_cell.account.domain.vo;
 
 public class CPF {
   private final String cpf;
@@ -9,7 +9,7 @@ public class CPF {
     if (!validate(cpf)) {
       throw new IllegalArgumentException("Invalid CPF");
     }
-    this.cpf = cpf;
+    this.cpf = cpf.replaceAll("\\D", "");
   }
 
   public String getCpf() {

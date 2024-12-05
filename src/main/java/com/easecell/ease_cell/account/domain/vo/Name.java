@@ -1,4 +1,4 @@
-package com.easecell.ease_cell.domain.vo;
+package com.easecell.ease_cell.account.domain.vo;
 
 public class Name {
   private final String firstName;

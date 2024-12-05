@@ -8,6 +8,6 @@ public class EaseCellApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EaseCellApplication.class, args);
-	}
 
+	}
 }

@@ -29,9 +29,9 @@ public class CreateAccountUseCaseTest {
     assertThat(account.accountId).isNotEmpty();
     assertThat(account.getFirstName()).isEqualTo(input.firstName());
     assertThat(account.getLastName()).isEqualTo(input.lastName());
-    assertThat(account.getCpf()).isEqualTo(input.cpf());
+    assertThat(account.getCpf()).isEqualTo("14874154514");
     assertThat(account.getBirthDate()).isEqualTo("27-10-1998");
-    assertThat(account.getPhone()).isEqualTo(input.phone());
+    assertThat(account.getPhone()).isEqualTo("21997108899");
     assertThat(account.getEmail()).isEqualTo(input.email());
   }
 
