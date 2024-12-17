@@ -1,32 +1,34 @@
 package com.easecell.ease_cell.account.domain.entity;
 
 import com.easecell.ease_cell.account.domain.vo.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class Account {
-  public final String accountId;
+  private final UUID accountId;
   private Name name;
   private CPF cpf;
-  private String birthDate;
+  private BirthDate birthDate;
   private Phone phone;
   private Email email;
   private Password password;
   private String accountAvatar;
 
   public Account(String firstName, String lastName, String cpf, String birthDate, String phone, String email, String password) {
-    this.accountId = UUID.randomUUID().toString();
+    this.accountId = UUID.randomUUID();
     this.name = new Name(firstName, lastName);
     this.cpf = new CPF(cpf);
-    this.birthDate = formatter(birthDate);
+    this.birthDate = new BirthDate(birthDate);
     this.phone = new Phone(phone);
     this.email = new Email(email);
     this.password = Password.create(password);
-    this.accountAvatar = String.format("https://ui-avatars.com/api/?name=%s+%s&background=random", this.getFirstName(), this.getLastName());
-
+    this.accountAvatar = generateDefaultAvatar();
   }
+
+  public UUID getAccountId() { return this.accountId; }
 
   public String getName() {
     return this.name.getName();
@@ -52,19 +54,12 @@ public class Account {
     this.cpf = new CPF(cpf);
   }
 
-  public String formatter(String date) {
-    DateTimeFormatter formatterInput = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate dateFormatted = LocalDate.parse(date, formatterInput);
-    DateTimeFormatter formatterDateBrl = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    return dateFormatted.format(formatterDateBrl);
-  }
-
-  public String getBirthDate() {
-    return this.birthDate;
+  public LocalDate getBirthDate() {
+    return this.birthDate.getBirthDate();
   }
 
   public void setBirthDate(String birthDate) {
-    this.birthDate = formatter(birthDate);
+    this.birthDate = new BirthDate(birthDate);
   }
 
   public String getPhone() {
@@ -91,11 +86,17 @@ public class Account {
     this.password = Password.create(password);
   }
 
+  public String generateDefaultAvatar() { return String.format("https://ui-avatars.com/api/?name=%s+%s&background=random", this.getFirstName(), this.getLastName()); }
+
   public String getAccountAvatar() {
     return this.accountAvatar;
   }
 
-  public void setAccountAvatar(String accountAvatar) {
-    this.accountAvatar = accountAvatar;
+  public void updateAvatar(String avatarUrl) {
+    if(avatarUrl == null || avatarUrl.isBlank()) {
+      this.accountAvatar = generateDefaultAvatar();
+    } else {
+      this.accountAvatar = avatarUrl;
+    }
   }
 }
