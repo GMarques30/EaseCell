@@ -21,8 +21,8 @@ public class ResetTokenTest {
   @Test
   @DisplayName("Should be able to create a valid reset token")
   public void should_be_able_to_create_a_valid_reset_token() {
-    assertThat(resetToken.getAccountTokenId()).isInstanceOf(UUID.class);
-    assertThat(resetToken.getAccountTokenId()).isNotNull();
+    assertThat(resetToken.getResetTokenId()).isInstanceOf(UUID.class);
+    assertThat(resetToken.getResetTokenId()).isNotNull();
     assertThat(resetToken.getAccountId()).isInstanceOf(UUID.class);
     assertThat(resetToken.getAccountId()).isNotNull();
     assertThat(resetToken.getCreatedAt()).isInstanceOf(LocalDateTime.class);

@@ -4,11 +4,10 @@ import com.easecell.ease_cell.account.application.dto.SendEmailInput;
 import com.easecell.ease_cell.account.application.dto.SendForgotPasswordInput;
 import com.easecell.ease_cell.account.application.gateway.EmailGateway;
 import com.easecell.ease_cell.account.application.repository.AccountRepository;
-import com.easecell.ease_cell.account.application.repository.AccountTokenRepository;
+import com.easecell.ease_cell.account.application.repository.ResetTokenRepository;
 import com.easecell.ease_cell.account.domain.entity.Account;
-import com.easecell.ease_cell.account.infra.gateway.SESGateway;
 import com.easecell.ease_cell.account.infra.repository.AccountRepositoryMemory;
-import com.easecell.ease_cell.account.infra.repository.AccountTokenRepositoryMemory;
+import com.easecell.ease_cell.account.infra.repository.ResetTokenRepositoryMemory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 public class SendForgotPasswordUseCaseTest {
 
-  private AccountTokenRepository accountTokenRepository;
+  private ResetTokenRepository accountTokenRepository;
   private AccountRepository accountRepository;
   @Mock
   private EmailGateway emailGateway;
@@ -34,7 +33,7 @@ public class SendForgotPasswordUseCaseTest {
   public void beforeEach() {
     MockitoAnnotations.openMocks(this);
     this.accountRepository = new AccountRepositoryMemory();
-    this.accountTokenRepository = new AccountTokenRepositoryMemory();
+    this.accountTokenRepository = new ResetTokenRepositoryMemory();
     this.sut = new SendForgotPasswordUseCase(accountRepository, accountTokenRepository, emailGateway);
   }
 

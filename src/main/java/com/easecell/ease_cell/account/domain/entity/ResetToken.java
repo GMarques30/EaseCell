@@ -4,18 +4,18 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ResetToken {
-  private final UUID accountTokenId;
+  private final UUID resetTokenId;
   private final UUID accountId;
   private final LocalDateTime createdAt;
 
   public ResetToken(UUID accountId) {
-    this.accountTokenId = UUID.randomUUID();
+    this.resetTokenId = UUID.randomUUID();
     this.accountId = accountId;
     this.createdAt = LocalDateTime.now();
   }
 
   public ResetToken(UUID accountId, LocalDateTime createdAt) {
-    this.accountTokenId = UUID.randomUUID();
+    this.resetTokenId = UUID.randomUUID();
     this.accountId = accountId;
     this.createdAt = createdAt;
   }
@@ -24,8 +24,8 @@ public class ResetToken {
     return !LocalDateTime.now().isAfter(this.createdAt.plusHours(2L));
   }
 
-  public UUID getAccountTokenId() {
-    return this.accountTokenId;
+  public UUID getResetTokenId() {
+    return this.resetTokenId;
   }
 
   public UUID getAccountId() {
