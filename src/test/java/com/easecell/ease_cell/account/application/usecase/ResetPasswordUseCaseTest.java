@@ -1,6 +1,6 @@
 package com.easecell.ease_cell.account.application.usecase;
 
-import com.easecell.ease_cell.account.application.dto.ResetTokenInput;
+import com.easecell.ease_cell.account.application.dto.ResetPasswordInput;
 import com.easecell.ease_cell.account.application.repository.AccountRepository;
 import com.easecell.ease_cell.account.application.repository.ResetTokenRepository;
 import com.easecell.ease_cell.account.domain.entity.Account;
@@ -39,8 +39,8 @@ public class ResetPasswordUseCaseTest {
     ResetToken token = new ResetToken(account.getAccountId());
     this.resetTokenRepository.save(token);
     String newPassword = "Abc@1234";
-    this.sut.execute(new ResetTokenInput(token.getResetTokenId().toString(), newPassword));
-    Account updatedAccount = this.accountRepository.findByAccountId(account.getAccountId().toString()).orElseThrow();
+    this.sut.execute(token.getResetTokenId(), new ResetPasswordInput(newPassword));
+    Account updatedAccount = this.accountRepository.findByAccountId(account.getAccountId()).orElseThrow();
     assertThat(updatedAccount.passwordMatches(newPassword)).isTrue();
   }
 
@@ -48,7 +48,7 @@ public class ResetPasswordUseCaseTest {
   @DisplayName("Should throw an exception if the token is not found")
   public void should_throw_an_exception_if_the_token_is_not_found() {
     String newPassword = "Abc@1234";
-    assertThrows(IllegalArgumentException.class, () -> this.sut.execute(new ResetTokenInput("token-non-existent", newPassword)));
+    assertThrows(IllegalArgumentException.class, () -> this.sut.execute("token-non-existent", new ResetPasswordInput(newPassword)));
   }
 
   @Test
@@ -58,15 +58,15 @@ public class ResetPasswordUseCaseTest {
     ResetToken tokenExpired = new ResetToken(account.getAccountId(), dateThreeHoursInThePast);
     this.resetTokenRepository.save(tokenExpired);
     String newPassword = "Abc@1234";
-    assertThrows(IllegalArgumentException.class, () -> this.sut.execute(new ResetTokenInput(tokenExpired.getResetTokenId().toString(), newPassword)));
+    assertThrows(IllegalArgumentException.class, () -> this.sut.execute(tokenExpired.getResetTokenId(), new ResetPasswordInput(newPassword)));
   }
 
   @Test
   @DisplayName("Should throw an exception if the account is not found")
   public void should_throw_an_exception_if_the_account_is_not_found() {
-    ResetToken token = new ResetToken(UUID.randomUUID());
+    ResetToken token = new ResetToken(UUID.randomUUID().toString());
     this.resetTokenRepository.save(token);
     String newPassword = "Abc@1234";
-    assertThrows(IllegalArgumentException.class, () -> this.sut.execute(new ResetTokenInput(token.getResetTokenId().toString(), newPassword)));
+    assertThrows(IllegalArgumentException.class, () -> this.sut.execute(token.getResetTokenId(), new ResetPasswordInput(newPassword)));
   }
 }

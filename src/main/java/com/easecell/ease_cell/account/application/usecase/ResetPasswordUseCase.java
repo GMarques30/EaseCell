@@ -1,6 +1,6 @@
 package com.easecell.ease_cell.account.application.usecase;
 
-import com.easecell.ease_cell.account.application.dto.ResetTokenInput;
+import com.easecell.ease_cell.account.application.dto.ResetPasswordInput;
 import com.easecell.ease_cell.account.application.repository.AccountRepository;
 import com.easecell.ease_cell.account.application.repository.ResetTokenRepository;
 import com.easecell.ease_cell.account.domain.entity.Account;
@@ -17,10 +17,10 @@ public class ResetPasswordUseCase {
     this.resetTokenRepository = resetTokenRepository;
   }
 
-  public void execute(ResetTokenInput input) {
-    ResetToken token = this.resetTokenRepository.findByResetTokenId(input.resetTokenId()).orElseThrow(() -> new IllegalArgumentException("Reset token not found."));
+  public void execute(String resetToken, ResetPasswordInput input) {
+    ResetToken token = this.resetTokenRepository.findByResetTokenId(resetToken).orElseThrow(() -> new IllegalArgumentException("Reset token not found."));
     if(!token.isValidResetToken()) throw new IllegalArgumentException("Reset token expired.");
-    Account account = this.accountRepository.findByAccountId(token.getAccountId().toString()).orElseThrow(() -> new IllegalArgumentException("Account not found."));
+    Account account = this.accountRepository.findByAccountId(token.getAccountId()).orElseThrow(() -> new IllegalArgumentException("Account not found."));
     account.setPassword(input.password());
     this.accountRepository.save(account);
   }

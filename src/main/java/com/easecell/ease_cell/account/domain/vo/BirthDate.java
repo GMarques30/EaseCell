@@ -12,7 +12,7 @@ public class BirthDate {
     this.birthDate = LocalDate.parse(birthDate, PATTERN_DATE);
   }
 
-  public LocalDate getBirthDate() {
-    return this.birthDate;
+  public String getBirthDate() {
+    return this.birthDate.toString();
   }
 }

@@ -22,7 +22,6 @@ public class AccountTest {
   @DisplayName("Should be able to create an account entity")
   public void should_be_able_to_create_an_account_entity() {
     assertNotNull(account.getAccountId());
-    assertThat(account.getAccountId()).isInstanceOf(UUID.class);
     assertThat(account.getName()).isEqualTo("John Doe");
     assertThat(account.getFirstName()).isEqualTo("John");
     assertThat(account.getLastName()).isEqualTo("Doe");

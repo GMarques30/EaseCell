@@ -28,7 +28,7 @@ public class AuthenticationUseCase {
     Algorithm algorithm = Algorithm.HMAC256(secretKey);
     String token = JWT.create()
             .withIssuer("easecell-authenticate")
-            .withSubject(account.getAccountId().toString())
+            .withSubject(account.getAccountId())
             .withExpiresAt(LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00")))
             .sign(algorithm);
     return new AuthenticationOutput(token);

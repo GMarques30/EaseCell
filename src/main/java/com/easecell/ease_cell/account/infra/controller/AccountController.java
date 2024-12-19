@@ -1,60 +1,56 @@
 package com.easecell.ease_cell.account.infra.controller;
 
-import com.easecell.ease_cell.account.application.dto.AuthenticationInput;
-import com.easecell.ease_cell.account.application.dto.AuthenticationOutput;
-import com.easecell.ease_cell.account.application.dto.CreateAccountInput;
-import com.easecell.ease_cell.account.application.dto.SendForgotPasswordInput;
-import com.easecell.ease_cell.account.application.usecase.AuthenticationUseCase;
-import com.easecell.ease_cell.account.application.usecase.CreateAccountUseCase;
-import com.easecell.ease_cell.account.application.usecase.SendForgotPasswordUseCase;
+import com.easecell.ease_cell.account.application.dto.*;
+import com.easecell.ease_cell.account.application.usecase.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
+
   private final CreateAccountUseCase createAccountUseCase;
   private final AuthenticationUseCase authenticationUseCase;
   private final SendForgotPasswordUseCase sendForgotPasswordUseCase;
+  private final ResetPasswordUseCase resetPasswordUseCase;
+  private final UpdateProfileUseCase updateProfileUseCase;
 
-  public AccountController(CreateAccountUseCase createAccountUseCase, AuthenticationUseCase authenticationUseCase, SendForgotPasswordUseCase sendForgotPasswordUseCase) {
+  public AccountController(CreateAccountUseCase createAccountUseCase, AuthenticationUseCase authenticationUseCase,
+                           SendForgotPasswordUseCase sendForgotPasswordUseCase, ResetPasswordUseCase resetPasswordUseCase,
+                           UpdateProfileUseCase updateProfileUseCase) {
     this.createAccountUseCase = createAccountUseCase;
     this.authenticationUseCase = authenticationUseCase;
     this.sendForgotPasswordUseCase = sendForgotPasswordUseCase;
+    this.resetPasswordUseCase = resetPasswordUseCase;
+    this.updateProfileUseCase = updateProfileUseCase;
   }
 
   @PostMapping("/register")
-  public ResponseEntity<Void> createAccount(@RequestBody CreateAccountInput input) {
-    try {
-      this.createAccountUseCase.execute(input);
-      return ResponseEntity.status(HttpStatus.CREATED).build();
-    } catch (Exception e) {
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-    }
+  @ResponseStatus(HttpStatus.CREATED)
+  public void createAccount(@RequestBody CreateAccountInput input) {
+    this.createAccountUseCase.execute(input);
   }
 
   @PostMapping("/login")
-  public ResponseEntity<AuthenticationOutput> authentication(@RequestBody AuthenticationInput input) {
-    try {
-      var output = this.authenticationUseCase.execute(input);
-      return ResponseEntity.status(HttpStatus.OK).body(output);
-    } catch (Exception e) {
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-    }
+  public @ResponseBody AuthenticationOutput authentication(@RequestBody AuthenticationInput input) {
+    return this.authenticationUseCase.execute(input);
   }
 
   @PostMapping("/forgot")
-  public ResponseEntity<Void> sendForgotPassword(@RequestBody SendForgotPasswordInput input) {
-    try {
-      this.sendForgotPasswordUseCase.execute(input);
-      return ResponseEntity.status(HttpStatus.OK).build();
-    } catch (Exception e) {
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-    }
+  @ResponseStatus(HttpStatus.OK)
+  public void sendForgotPassword(@RequestBody SendForgotPasswordInput input) {
+    this.sendForgotPasswordUseCase.execute(input);
+  }
+
+  @PostMapping("/reset-password/{resetToken}")
+  @ResponseStatus(HttpStatus.OK)
+  public void resetPassword(@PathVariable("resetToken") String resetToken, @RequestBody ResetPasswordInput input) {
+    this.resetPasswordUseCase.execute(resetToken, input);
+  }
+
+  @PutMapping("/me/{accountId}")
+  @ResponseBody
+  public UpdateProfileOutput updateProfile(@PathVariable("accountId") String accountId, @RequestBody UpdateProfileInput input) {
+    return this.updateProfileUseCase.execute(accountId, input);
   }
 }

@@ -1,10 +1,7 @@
 package com.easecell.ease_cell.account.domain.entity;
 
 import com.easecell.ease_cell.account.domain.vo.*;
-import org.springframework.cglib.core.Local;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class Account {
@@ -28,7 +25,7 @@ public class Account {
     this.accountAvatar = generateDefaultAvatar();
   }
 
-  public UUID getAccountId() { return this.accountId; }
+  public String getAccountId() { return this.accountId.toString(); }
 
   public String getName() {
     return this.name.getName();
@@ -44,6 +41,9 @@ public class Account {
 
   public void setName(String firstName, String lastName) {
     this.name = new Name(firstName, lastName);
+    if(this.accountAvatar.contains("ui-avatars.com")) {
+      this.accountAvatar = generateDefaultAvatar();
+    }
   }
 
   public String getCpf() {
@@ -54,7 +54,7 @@ public class Account {
     this.cpf = new CPF(cpf);
   }
 
-  public LocalDate getBirthDate() {
+  public String getBirthDate() {
     return this.birthDate.getBirthDate();
   }
 

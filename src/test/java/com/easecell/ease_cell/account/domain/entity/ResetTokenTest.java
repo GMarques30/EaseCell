@@ -15,15 +15,13 @@ public class ResetTokenTest {
 
   @BeforeEach
   public void beforeEach() {
-    this.resetToken = new ResetToken(UUID.randomUUID());
+    this.resetToken = new ResetToken(UUID.randomUUID().toString());
   }
 
   @Test
   @DisplayName("Should be able to create a valid reset token")
   public void should_be_able_to_create_a_valid_reset_token() {
-    assertThat(resetToken.getResetTokenId()).isInstanceOf(UUID.class);
     assertThat(resetToken.getResetTokenId()).isNotNull();
-    assertThat(resetToken.getAccountId()).isInstanceOf(UUID.class);
     assertThat(resetToken.getAccountId()).isNotNull();
     assertThat(resetToken.getCreatedAt()).isInstanceOf(LocalDateTime.class);
     assertThat(resetToken.getCreatedAt()).isNotNull();
@@ -39,7 +37,7 @@ public class ResetTokenTest {
   @DisplayName("Should return false if the reset tokens expiration time has passed")
     public void should_return_false_if_the_reset_tokens_expiration_time_has_passed() {
       LocalDateTime dateTimeExpired = LocalDateTime.now().minusHours(3L);
-      ResetToken resetTokenExpired = new ResetToken(UUID.randomUUID(), dateTimeExpired);
+      ResetToken resetTokenExpired = new ResetToken(UUID.randomUUID().toString(), dateTimeExpired);
       assertThat(resetTokenExpired.isValidResetToken()).isFalse();
   }
 }

@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 public class SendForgotPasswordUseCaseTest {
 
-  private ResetTokenRepository accountTokenRepository;
+  private ResetTokenRepository resetTokenRepository;
   private AccountRepository accountRepository;
   @Mock
   private EmailGateway emailGateway;
@@ -33,8 +33,8 @@ public class SendForgotPasswordUseCaseTest {
   public void beforeEach() {
     MockitoAnnotations.openMocks(this);
     this.accountRepository = new AccountRepositoryMemory();
-    this.accountTokenRepository = new ResetTokenRepositoryMemory();
-    this.sut = new SendForgotPasswordUseCase(accountRepository, accountTokenRepository, emailGateway);
+    this.resetTokenRepository = new ResetTokenRepositoryMemory();
+    this.sut = new SendForgotPasswordUseCase(accountRepository, resetTokenRepository, emailGateway);
   }
 
   @Test

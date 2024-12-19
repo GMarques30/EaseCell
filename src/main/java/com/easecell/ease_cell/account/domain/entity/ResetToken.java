@@ -8,15 +8,15 @@ public class ResetToken {
   private final UUID accountId;
   private final LocalDateTime createdAt;
 
-  public ResetToken(UUID accountId) {
+  public ResetToken(String accountId) {
     this.resetTokenId = UUID.randomUUID();
-    this.accountId = accountId;
+    this.accountId = UUID.fromString(accountId);
     this.createdAt = LocalDateTime.now();
   }
 
-  public ResetToken(UUID accountId, LocalDateTime createdAt) {
+  public ResetToken(String accountId, LocalDateTime createdAt) {
     this.resetTokenId = UUID.randomUUID();
-    this.accountId = accountId;
+    this.accountId = UUID.fromString(accountId);
     this.createdAt = createdAt;
   }
 
@@ -24,12 +24,12 @@ public class ResetToken {
     return !LocalDateTime.now().isAfter(this.createdAt.plusHours(2L));
   }
 
-  public UUID getResetTokenId() {
-    return this.resetTokenId;
+  public String getResetTokenId() {
+    return this.resetTokenId.toString();
   }
 
-  public UUID getAccountId() {
-    return this.accountId;
+  public String getAccountId() {
+    return this.accountId.toString();
   }
 
   public LocalDateTime getCreatedAt() {
