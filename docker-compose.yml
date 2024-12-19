@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  ease-cell:
+    container_name: ease_cell
+    build:
+      context: ./
+    environment:
+      - aws.access-key=${AWS_ACCESS_KEY}
+      - aws.secret-key=${AWS_SECRET_KEY}
+      - aws.region=${AWS_REGION}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - ease_cell-network
+
+  postgres:
+    image: postgres:14.3-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: app
+    ports:
+      - "5432:5432"
+    networks:
+      - ease_cell-network
+    volumes:
+      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  ease_cell-network:
+    driver: bridge

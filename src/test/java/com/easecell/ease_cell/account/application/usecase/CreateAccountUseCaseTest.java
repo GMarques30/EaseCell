@@ -26,11 +26,11 @@ public class CreateAccountUseCaseTest {
     var input = new CreateAccountInput("John", "Doe", "148.741.545-14", "1998-10-27", "(21) 99710-8899", "john.doe@example.com", "John@123");
     this.sut.execute(input);
     var account = this.accountRepository.findByEmail(input.email()).orElseThrow();
-    assertThat(account.accountId).isNotEmpty();
+    assertThat(account.getAccountId()).isNotNull();
     assertThat(account.getFirstName()).isEqualTo(input.firstName());
     assertThat(account.getLastName()).isEqualTo(input.lastName());
     assertThat(account.getCpf()).isEqualTo("14874154514");
-    assertThat(account.getBirthDate()).isEqualTo("27-10-1998");
+    assertThat(account.getBirthDate()).isEqualTo("1998-10-27");
     assertThat(account.getPhone()).isEqualTo("21997108899");
     assertThat(account.getEmail()).isEqualTo(input.email());
   }

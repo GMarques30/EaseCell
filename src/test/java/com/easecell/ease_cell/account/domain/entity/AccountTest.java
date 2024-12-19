@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -16,14 +19,14 @@ public class AccountTest {
   }
 
   @Test
-  @DisplayName("Should be able to create a account entity")
+  @DisplayName("Should be able to create an account entity")
   public void should_be_able_to_create_an_account_entity() {
-    assertNotNull(account.accountId);
+    assertNotNull(account.getAccountId());
     assertThat(account.getName()).isEqualTo("John Doe");
     assertThat(account.getFirstName()).isEqualTo("John");
     assertThat(account.getLastName()).isEqualTo("Doe");
     assertThat(account.getCpf()).isEqualTo("12345678909");
-    assertThat(account.getBirthDate()).isEqualTo("03-07-1998");
+    assertThat(account.getBirthDate()).isEqualTo("1998-07-03");
     assertThat(account.getPhone()).isEqualTo("11912345678");
     assertThat(account.getEmail()).isEqualTo("john.doe@example.com");
     assertThat(account.getAccountAvatar()).isEqualTo("https://ui-avatars.com/api/?name=John+Doe&background=random");
@@ -49,7 +52,7 @@ public class AccountTest {
   @DisplayName("Should be able to change the birth date")
   public void should_be_able_to_change_the_birth_date() {
     account.setBirthDate("1999-05-20");
-    assertThat(account.getBirthDate()).isEqualTo("20-05-1999");
+    assertThat(account.getBirthDate()).isEqualTo("1999-05-20");
   }
 
   @Test
@@ -76,9 +79,16 @@ public class AccountTest {
   @Test
   @DisplayName("Should be able to add an avatar image an account")
   public void should_be_able_to_add_an_avatar_image_an_account() {
-    String avatarUrl = String.format("https://easecell-avatars.s3.amazonaws.com/avatars/%s/avatar-image.jpg", account.accountId);
-    account.setAccountAvatar(avatarUrl);
+    String avatarUrl = String.format("https://easecell-avatars.s3.amazonaws.com/avatars/%s/avatar-image.jpg", account.getAccountId());
+    account.updateAvatar(avatarUrl);
     assertThat(account.getAccountAvatar()).isEqualTo(avatarUrl);
+  }
+
+  @Test
+  @DisplayName("Should generate a default avatar if no avatar is sent")
+  public void should_generate_a_default_avatar_if_no_avatar_is_sent() {
+    account.updateAvatar(null);
+    assertThat(account.getAccountAvatar()).isEqualTo("https://ui-avatars.com/api/?name=John+Doe&background=random");
   }
 
   @Test
